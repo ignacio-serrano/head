@@ -70,11 +70,16 @@ SETLOCAL EnableDelayedExpansion
 :: target directory.
 SET testName=%~1
 
-:: Sets the PATH for this test.
+:: Sets the number of lines to "behead" for this test.
 CALL "%rootDir%\src\test\%testName%\prepare-test.bat"
 
 :: Runs head, capturing its output in a file.
 >"%rootDir%\target\test\%testName%.output.txt" CALL "%rootDir%\src\main\head.bat" %numberOfLines% "%rootDir%\src\test\%testName%\test-file.txt"
+SET errLvl=%ERRORLEVEL%
+IF %errLvl% NEQ 0 (
+    ECHO Error running head.bat %numberOfLines% "%testName%\test-file.txt"
+    EXIT /B %errLvl% & ENDLOCAL
+)
 
 :: Compares the contents of that file with those of expected-output.txt. If 
 :: the contents aren't identical, FC will set an ERRORLEVEL. The output of FC 
