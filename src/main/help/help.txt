@@ -1,0 +1,10 @@
+
+Outputs first lines of a text file.
+
+Syntax:
+   head {number of lines} {file}
+
+Parameters:
+   {number of lines}: Number of lines to output.
+   {file}:            File to output the lines from.
+
